@@ -1,0 +1,17 @@
+---
+title: "Generalized Estimating Equations (GEE)"
+output:
+  html_document:
+    toc_float: false
+    includes:
+      before_body: [include_tnlm_nav.html]
+      after_body: [include_tnlm_nav_end.html, footer.html]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+***
+## [Continue to Generalized Linear Mixed-Effects Models (GLMMs)](tnlm-5.html){.continue-link}

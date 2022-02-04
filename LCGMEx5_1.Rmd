@@ -1,0 +1,195 @@
+[1 Example Title]
+Basic Latent Growth Curve Model
+
+[1a. concise description of example]
+This is an example of a basic LGCM w/ continuous outcome [y], across four measurement occassions
+
+[2. Overview of Model]
+LGCM is a special class of confirmatory factor analysis used to model some outcome (Y) measured repeatedly over time (t). The most basic LGCM includes two latent factors and uses a fixed time structure to model the observed outcome (Y) across assessment waves (t): 1) a latent intercept; and 2) a latent slope. The intercept factor is constant for each individual across observations, and is akin to the point at which a straight line "intercepts" the vertical axis on a two-dimensional coordinate system (@citation). This is modeled by fixing the factor loadings for the latent intercept to 1 at each measurement occassion. 
+
+
+[3. Generic Model code]
+```{r Example_5-1, eval=FALSE, class.source = 'fold-show'}
+# Example-5.1 uses the lavaan package from r
+model <- ' i =~ 1*y1 + 1*y2 + 1*y3 + 1*y4
+           s =~ 0*y1 + 1*y2 + 2*y3 + 3*y4 '
+fit <- growth(model, data=path-to-data)
+summary(fit)
+```
+
+[3a. List of model parameters]
+A basic linear growth model includes two factors: 1) a latent intercept; and 2) a latent slope. This model estimates the following six parameters:
+  1) intercept mean
+  2) intercept variance
+  3) slope mean
+  4) slope variance
+  5) intercept and slope covariance
+  6) an error variance that remains constant across repeated measurements
+
+[3b. Line-by-Line Code Breakdown]
+
+[3b1. Insert code snippet 1]
+```{r, eval=FALSE, class.source = 'fold-show'}
+model <- ' i =~ 1*y1 + 1*y2 + 1*y3 + 1*y4
+           s =~ 0*y1 + 1*y2 + 2*y3 + 3*y4 '
+```
+[3b2. Description of code snippet 1]
+This model is specified by using the '*=~*' operator to name and define the growth model factors. The left-hand side of the '=~' operator is used to specify the latent intercept *i* and latent slope *s* factors. The right-hand side of the '=~' operator specifies the growth model outcome and time scores. In the LGCM framework, the functional form of growth (e.g., linear) is defined by fixing the  factor loadings of the growth model factors. The intercept factor remains constant for each individual across time; as such, factor loadings for the intercept *i* are fixed to the value of 1 at each measurement occassion. To define linear growth across the 4 equidistant time points, time scores for the slope *s* growth factor are fixed at 0, 1, 2, and 3. Setting the time score at the first measurement occassion to zero anchors the latent intercept as "baseline" or "initial status". Means and variances of the growth factors are estimated as the default, as is the growth factor covariance.
+
+[3b3. Insert code snippet 2]
+```{r, eval=FALSE, class.source = 'fold-show'}
+fit <- growth(model, data=path-to-data)
+```
+[3b4. Description of code snippet 2]
+The *growth()* function can be called to fit the *model* that we defined in the prior step.
+
+[3b5. Insert code snippet 2]
+```{r, eval=FALSE, class.source = 'fold-show'}
+summary(fit)
+```
+[3b6. Description of code snippet 2]
+The *summary()* function can be called to provide an overview and show results of the fitted model.
+
+
+------
+
+
+  
+  4b. Output
+  4b. Results write-up
+  4c. Plots
+  4d. Tables
+
+------
+
+[4. Example using ABCD Study data]
+"The goal of our current LGM is to assess the linear trajectory of GPA, with the question being, does the average student GPA in a particular school go up or down over time?"
+
+[4a. Model Code]
+```{r}
+# LGCM for a continuous outcome [y], across four mesurement occassions
+model <- ' i =~ 1*Brain_T1 + 1*Brain_T2 + 1*Brain_T3 + 1*Brain_T4
+           s =~ 0*Brain_T1 + 1*Brain_T2 + 2*Brain_T3 + 3*Brain_T4 '
+fit <- growth(model, data=mydata, meanstructure=TRUE, estimator = "MLR", missing = "ML")
+summary(fit, standardized = TRUE, fit.measures = TRUE)
+
+# extract information
+mean_lv <- lavInspect(fit, "mean.lv", add.labels = TRUE, add.class = TRUE,
+           list.by.group = TRUE,
+           drop.list.single.group = TRUE)
+
+cov_lv <- lavInspect(fit, "cov.lv", add.labels = TRUE, add.class = TRUE,
+           list.by.group = TRUE,
+           drop.list.single.group = TRUE)
+
+
+intercept_var <- cov_lv[1]
+slope_var <- cov_lv[4]
+is_covary <- cov_lv[2]
+
+intercept_var
+slope_var
+is_covary
+
+intercept_mean <- mean_lv[1]
+slope_mean <- mean_lv[2]
+
+#lavInspect(fit, "sampstat")
+#lavNames(fit, "ov" "lv")
+#lavInspect(fit, "mean.lv") #Alias: "eeta" [for E(eta)].
+#lavInspect(fit, "cor.lv")
+#parTable(fit)
+#varTable(fit)
+#inspect(fit, what="cor.all")
+#lavCor(fit)
+#out <- lavExport(fit, target = "Mplus", export=FALSE)
+#cat(out)
+
+```
+
+[4b. Output]
+```{}
+
+Model Test User Model:
+##                                                Standard      Robust
+##   Test Statistic                                392.563     312.386
+##   Degrees of freedom                                  5           5
+##   P-value (Chi-square)                            0.000       0.000
+
+```
+
+```{}
+User Model versus Baseline Model:
+
+Comparative Fit Index (CFI)                    0.848       0.789
+Tucker-Lewis Index (TLI)                       0.818       0.747
+
+```
+
+```{}
+Root Mean Square Error of Approximation:
+ 
+   RMSEA                                          0.242       0.215
+
+```
+
+```{}
+Standardized Root Mean Square Residual:
+ 
+   SRMR                                           0.238       0.238
+```
+
+[4b. Results write-up]
+The average baseline score (i.e., the mean intercept value) on the xxxxx measure is `r intercept_mean` and the mean slope value is `r slope_mean`. This means that the predicted xxxx score at the first measurement occasion (i.e., t=0) is `r intercept_mean` and at each subsequent measurement occasion the xxxx score is expected to go up by `r slope_mean` points. There is significant variability in individual's xxxxx scores at baseline `r intercept_var`, p < .xxx), as well as in their slope value `r slope_var`, p < .001), suggesting that the rate of change in xxxx was not the same for all children. Finally, the estimated negative covariance or `r is_covary`, p < .001) implies that the higher the starting score on xxxx, the weaker the increase in xxxxxx.
+
+[4c. Plots]
+```{r wide-to-long, echo = FALSE}
+new <- mydata %>%
+  select(id_s, sex, Brain_T1, Brain_T2, Brain_T3, Brain_T4)
+
+new2 <- new %>% 
+  pivot_longer(!id_s:sex, values_drop_na = TRUE) %>% 
+  mutate(checked = TRUE)
+```
+
+```{r growth model plots}
+
+p <- ggplot(data = new2, aes(x = name, y = value, group = id_s))
+
+p + geom_line() + stat_smooth(aes(group = 1), method = "lm", se = FALSE) + stat_summary(aes(group = 1), geom = "point", fun = mean, shape = 17, size = 3)+theme_bw()
+#+ facet_grid(. ~ sex)
+#+ facet_wrap(~id_s)
+
+ggplot(new2, aes(x=name, y=value, group=1))+geom_jitter(height = 0, width = 0.2, alpha = 0.2)+geom_point(alpha=0.5)+stat_summary(fun=mean, colour="red", geom="line", size = 3)+theme_bw() # draw a mean line in the data
+```
+
+[4d. Tables]
+```{r}
+head(mydata)
+```
+
+Start with the 'intercepts':
+
+```{}
+Intercepts:
+                   Estimate  Std.Err  Z-value  P(>|z|)
+                       
+    i                 0.487    0.048   10.072    0.000
+    s                 0.267    0.045    5.884    0.000
+```
+
+
+```{}
+Covariances:
+                   Estimate  Std.Err  Z-value  P(>|z|)
+  i ~~                                                
+    s                 0.226    0.050    4.512    0.000
+Variances:
+                   Estimate  Std.Err  Z-value  P(>|z|)
+    outcome0          0.287    0.041    6.924    0.000
+    outcome1          0.219    0.021   10.501    0.000
+    outcome2          0.185    0.027    6.748    0.000
+    outcome3          0.357    0.065    5.485    0.000
+    i                 0.977    0.076   12.882    0.000
+    s                 0.969    0.065   14.841    0.000
+```
