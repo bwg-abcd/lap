@@ -1,5 +1,5 @@
 ---
-title: "Simple Descriptive Methods"
+title: "Simple Descriptive and Group Means"
 output:
   html_document:
     toc_float: false
@@ -12,6 +12,35 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r libraries, message=FALSE, warning=FALSE, echo = FALSE}
+# packages
+library(xxxxx) # xxxxxx
+library(xxxxx) # xxxxxx
+```
 
+```{r, echo = FALSE}
+# Load the data:
+mydata <- read_sav("/path-to-data")
+```
+
+1. Example Title
+  1a. concise description of example
+
+2. Overview of Model
+
+3. Model Code- Generic Example (using non-specific variables [e.g., x, y, t1, t2])
+  3a. List of model parameters
+  3b. Line-by-Line Code Breakdown
+    3b1. Insert code snippet 1
+    3b2. Description of code snippet 1
+    3b3. Insert additional code snippets as necessary
+    3b4. Description of additional code snippets
+   
+4. Model Code- ABCD Data Example
+  4a. Model Code 
+  4b. Output
+  4b. Results write-up
+  4c. Plots
+  4d. Tables
 ***
 ## [Continue to Change Scores](tlm-3.html){.continue-link}
