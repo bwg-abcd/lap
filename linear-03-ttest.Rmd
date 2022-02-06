@@ -1,0 +1,57 @@
+---
+title: "Paired T-Test"
+output:
+  html_document:
+    toc_float: false
+    includes:
+      before_body: [include_tlm_nav.html]
+      after_body: [include_tlm_nav_end.html, footer.html]
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r libraries, message=FALSE, warning=FALSE, echo = FALSE}
+# packages
+library(xxxxx) # xxxxxx
+library(xxxxx) # xxxxxx
+```
+
+```{r, echo = FALSE}
+# Load the data:
+mydata <- read_sav("/path-to-data")
+```
+
+## x.1: Paired T-Test
+
+This is an example xxxxxxx
+
+### Overview of Model
+xxxxxxx
+
+### Diagram
+```{r xxxxx_graph, echo=FALSE}
+grViz('/path-to-diagram', width='100%', height='25%')
+fig.cap = "insert figure caption"
+```
+
+### Explanation of Model Code
+```{r Example_x.1, eval=FALSE, class.source = 'fold-show'}
+model xxxxx
+```
+  3a. List of model parameters
+  3b. Line-by-Line Code Breakdown
+    3b1. Insert code snippet 1
+    3b2. Description of code snippet 1
+    3b3. Insert additional code snippets as necessary
+    3b4. Description of additional code snippets
+   
+4. Model Code- ABCD Data Example
+  4a. Model Code 
+  4b. Output
+  4b. Results write-up
+  4c. Plots
+  4d. Tables
+
+***
+## [Continue to Univariate Repeated-Measures ANOVA](tlm-6.html){.continue-link}

@@ -1,0 +1,17 @@
+---
+title: "Growth Mixture Models (GMM)"
+output:
+  html_document:
+    toc_float: false
+    includes:
+      before_body: [include_lsem_nav.html]
+      after_body: [include_lsem_nav_end.html, footer.html]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+***
+## [Continue to State-Trait Models](lsem-6.html){.continue-link}
